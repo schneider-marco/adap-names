@@ -61,9 +61,9 @@ export class Name {
         this.components.forEach((element: string) => {
             idx += 1;
             // escape backslash
-            element = element.replace(/\\/g, "\\\\");
+            element = element.replace(/\\/g, ESCAPE_CHARACTER+ESCAPE_CHARACTER);
             // escape dot
-            element = element.replace(/\./g, "\\.");
+            element = element.replace(/\./g, ESCAPE_CHARACTER+".");
             //console.log(element);
             name += element;
             if (idx !== this.components.length) {
