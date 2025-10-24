@@ -18,9 +18,14 @@ export class Name {
     private delimiter: string = DEFAULT_DELIMITER;
     private components: string[] = [];
 
-    /** Expects that all Name components are properly masked */
+    // Expects that all Name components are properly masked
     constructor(other: string[], delimiter?: string) {
-        throw new Error("needs implementation or deletion");
+        if (delimiter !== undefined) {
+            this.delimiter = delimiter;
+        } else {
+            this.delimiter = DEFAULT_DELIMITER;
+        }
+        this.components = other;
     }
 
     /**
@@ -28,8 +33,20 @@ export class Name {
      * Control characters are not escaped (creating a human-readable string)
      * Users can vary the delimiter character to be used
      */
+    // @methodtype conversion-method
     public asString(delimiter: string = this.delimiter): string {
-        throw new Error("needs implementation or deletion");
+        let name: string = "";
+        let idx: number = 0;
+        this.components.forEach((element: string) => {
+            idx += 1;
+            name += element;
+            if (idx !== this.components.length) {
+                name += delimiter
+            }
+
+        })
+
+        return name;
     }
 
     /** 
@@ -37,36 +54,79 @@ export class Name {
      * Machine-readable means that from a data string, a Name can be parsed back in
      * The control characters in the data string are the default characters
      */
+    // @methodtype conversion-method
     public asDataString(): string {
-        throw new Error("needs implementation or deletion");
+        let name: string = "";
+        let idx: number = 0;
+        this.components.forEach((element: string) => {
+            idx += 1;
+            // escape backslash
+            element = element.replace(/\\/g, "\\\\");
+            // escape dot
+            element = element.replace(/\./g, "\\.");
+            //console.log(element);
+            name += element;
+            if (idx !== this.components.length) {
+                name += DEFAULT_DELIMITER
+            }
+        })
+        return name;
     }
 
+    // @methodtype get-method
     public getComponent(i: number): string {
-        throw new Error("needs implementation or deletion");
+        return this.components[i];
     }
 
     /** Expects that new Name component c is properly masked */
+    // @methodtype set-method
     public setComponent(i: number, c: string): void {
-        throw new Error("needs implementation or deletion");
+        this.components[i] = c;
     }
 
      /** Returns number of components in Name instance */
+     // @methodtype get-method
      public getNoComponents(): number {
-        throw new Error("needs implementation or deletion");
+        return this.components.length;
     }
 
     /** Expects that new Name component c is properly masked */
+    // @methodtype command-method
     public insert(i: number, c: string): void {
-        throw new Error("needs implementation or deletion");
+        let idx: number = 0;
+        let newComponent: string[] = [];
+        this.components.forEach((element: string) => {
+            if (idx === i){
+                newComponent.push(c);
+                idx++;
+                newComponent.push(element);
+            }else{
+                newComponent.push(element);
+            }
+            idx++;
+        })
+        this.components = newComponent;
     }
 
     /** Expects that new Name component c is properly masked */
+    // @methodtype command-method
     public append(c: string): void {
-        throw new Error("needs implementation or deletion");
+        this.components.push(c)
     }
 
+    // @methodtype command-method
     public remove(i: number): void {
-        throw new Error("needs implementation or deletion");
+        let newComponent: string[] = [];
+        let idx: number = 0;
+        this.components.forEach((element: string) => {
+            if (idx === i){
+                //console.log(idx)
+            }else {
+                newComponent.push(element);
+            }
+            idx++;
+        })
+        this.components = newComponent;
     }
 
 }
