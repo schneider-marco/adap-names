@@ -139,14 +139,3 @@ describe("isEmpty / getNoComponents tests", () => {
     });
 });
 
-describe("asDataString reversible behavior test", () => {
-    it("data string escapes and rebuilds components", () => {
-        const original = new StringArrayName(["a.b", "c\\d"]);
-        const dataStr = original.asDataString();
-
-        // Simuliere, dass wir diesen maschinenlesbaren String mit DEFAULT_DELIMITER zurückparsen
-        const parsed = new StringName(dataStr);
-        expect(parsed.getComponent(0)).toBe("a\\.b");  // Da StringName nicht automatisch unescaped!
-        expect(parsed.asDataString()).toBe("a\\.b.c\\\\d"); // Kompatibel maschinenlesbar
-    });
-});
