@@ -43,9 +43,7 @@ export class Name {
             if (idx !== this.components.length) {
                 name += delimiter
             }
-
         })
-
         return name;
     }
 
