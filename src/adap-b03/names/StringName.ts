@@ -8,64 +8,72 @@ export class StringName extends AbstractName {
     protected noComponents: number = 0;
 
     constructor(source: string, delimiter?: string) {
-        super();
-        throw new Error("needs implementation or deletion");
+        super(delimiter);
+        this.name = source;
+        if (this.name === "") {
+            this.noComponents = 0;
+        } else {
+            this.noComponents = this.name.split(this.delimiter).length;
+        }
     }
 
     public clone(): Name {
-        throw new Error("needs implementation or deletion");
-    }
-
-    public asString(delimiter: string = this.delimiter): string {
-        throw new Error("needs implementation or deletion");
-    }
-
-    public asDataString(): string {
-        throw new Error("needs implementation or deletion");
-    }
-
-    public isEqual(other: Name): boolean {
-        throw new Error("needs implementation or deletion");
-    }
-
-    public getHashCode(): number {
-        throw new Error("needs implementation or deletion");
-    }
-
-    public isEmpty(): boolean {
-        throw new Error("needs implementation or deletion");
-    }
-
-    public getDelimiterCharacter(): string {
-        throw new Error("needs implementation or deletion");
+        return new StringName(this.name, this.delimiter);
     }
 
     public getNoComponents(): number {
-        throw new Error("needs implementation or deletion");
+        return this.noComponents;
     }
 
     public getComponent(i: number): string {
-        throw new Error("needs implementation or deletion");
+        let names: string[] = this.name.split(this.delimiter);
+        if (i < 0 || i >= names.length) {
+            throw new Error("index out of range");
+        }
+        return names[i];
     }
 
     public setComponent(i: number, c: string) {
-        throw new Error("needs implementation or deletion");
+        let nameArray: string[] = this.name.split(this.delimiter);
+        let newNameArray: string[] = [];
+        for (let n = 0; n < nameArray.length; n++) {
+            if (n === i){
+                newNameArray.push(c);
+            } else{
+                newNameArray.push(nameArray[n]);
+
+            }
+        }
+        this.name = newNameArray.join(this.delimiter);
     }
 
     public insert(i: number, c: string) {
-        throw new Error("needs implementation or deletion");
+        let nameArray: string[] = this.name.split(this.delimiter);
+        let newNameArray: string[] = [];
+        for (let n = 0; n < nameArray.length; n++) {
+            if (n === i){
+                newNameArray.push(c)
+            }
+            newNameArray.push(nameArray[n]);
+
+        }
+        this.name = newNameArray.join(this.delimiter);
+        this.noComponents++;
     }
 
     public append(c: string) {
-        throw new Error("needs implementation or deletion");
+        if (this.name === "") {
+            this.name = c;
+        } else {
+            this.name += this.delimiter + c;
+        }
+        this.noComponents++;
     }
 
     public remove(i: number) {
-        throw new Error("needs implementation or deletion");
+        const nameArray = this.name.split(this.delimiter);
+        nameArray.splice(i, 1);
+        this.name = nameArray.join(this.delimiter);
+        this.noComponents--;
     }
-
-    public concat(other: Name): void {
-        throw new Error("needs implementation or deletion");
-    }
-
 }
