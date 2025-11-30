@@ -2,7 +2,7 @@ import { describe, it, expect } from "vitest";
 
 import { Coordinate } from "../../../src/adap-b06/coordinates/Coordinate";
 import { CartesianCoordinate } from "../../../src/adap-b06/coordinates/CartesianCoordinate";
-import { PolarCoordinate } from "../../../src/adap-b06/coordinates/PolarCoordinate";
+import { PolarCoordinate } from "../../../src/adap-b06/coordinates/PolarCoordinate";(works with Win
 
 describe("Equality test", () => {
   it("test isEqual", () => {
