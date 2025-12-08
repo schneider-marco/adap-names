@@ -3,6 +3,8 @@ import { InvalidStateException } from "../common/InvalidStateException";
 
 import { Name } from "../names/Name";
 import { Directory } from "./Directory";
+import {Exception} from "../common/Exception";
+import {ServiceFailureException} from "../common/ServiceFailureException";
 
 export class Node {
 
@@ -57,7 +59,33 @@ export class Node {
      * @param bn basename of node being searched for
      */
     public findNodes(bn: string): Set<Node> {
-        throw new Error("needs implementation or deletion");
+        const result = new Set<Node>();
+
+        try {
+            this.collectNodes(bn, result);
+            return result;
+
+        } catch (e) {
+            let ex = e instanceof Exception
+                ? e
+                : new InvalidStateException("Unknown internal error");
+
+            throw new ServiceFailureException("findNodes failed", ex);
+        }
+    }
+
+    protected validateNode(): void {
+        if (this.getBaseName() === "") {
+            throw new InvalidStateException("Invalid node state: empty basename");
+        }
+    }
+
+    protected collectNodes(bn: string, result: Set<Node>): void {
+        this.validateNode();
+
+        if (this.getBaseName() === bn) {
+            result.add(this);
+        }
     }
 
 }

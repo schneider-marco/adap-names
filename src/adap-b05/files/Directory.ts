@@ -20,4 +20,18 @@ export class Directory extends Node {
         this.childNodes.delete(cn); // Yikes! Should have been called remove
     }
 
+    protected collectNodes(bn: string, result: Set<Node>): void {
+        this.validateNode();
+
+        if (this.getBaseName() === bn) {
+            result.add(this);
+        }
+
+        for (const child of this.childNodes) {
+            child.collectNodes(bn, result);
+        }
+    }
+
+
+
 }
